@@ -410,7 +410,16 @@ True
 
 \* Displaying output using `Console.WriteLine()`
 
+# Variables and Operators in C#
 
+## Variables
+
+Variables are named storage locations used to hold data in memory.
+
+```csharp
+int a = 10;
+int b = 5;
+double price = 19.99;
 
 \## How to Run
 
