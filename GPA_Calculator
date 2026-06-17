@@ -1,0 +1,16 @@
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+		string StudentName = "Boma";
+		int StudentAge = 40;
+		double StudentGPA = 3.0;
+		double BonusPoint = 0.5;
+		Console.WriteLine( StudentGPA += BonusPoint);
+		Console.WriteLine( StudentGPA -= (BonusPoint * 2));
+		Console.WriteLine( StudentGPA >= 3.0);
+		
+	}
+}
