@@ -19,6 +19,7 @@ class Program
 // Weekly Sales Report
 using System;
 
+
 class Program
 {
     static void Main()
@@ -53,6 +54,56 @@ class Program
             }
 
             Console.WriteLine("\n");
+        }
+    }
+}
+
+//Senior Citizen Discount
+
+Condition:
+
+Age 60 or above → "Senior discount applied."
+Otherwise → "No senior discount."
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter your age: ");
+        int age = int.Parse(Console.ReadLine());
+
+        if (age >= 60)
+        {
+            Console.WriteLine("Senior discount applied.");
+        }
+        else
+        {
+            Console.WriteLine("No senior discount.");
+        }
+    }
+}
+
+// Student Discount
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter your age: ");
+        int age = int.Parse(Console.ReadLine());
+
+        Console.Write("Are you a student? (yes/no): ");
+        string student = Console.ReadLine().ToLower();
+
+        if (age < 25 && student == "yes")
+        {
+            Console.WriteLine("Student discount applied.");
+        }
+        else
+        {
+            Console.WriteLine("No student discount.");
         }
     }
 }
