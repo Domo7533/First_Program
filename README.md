@@ -253,3 +253,61 @@ Think of climbing stairs:
 - **for loop**: You know there are exactly 10 steps, so you count each step.
 - **while loop**: You keep climbing while there are stairs ahead.
 - **do-while loop**: You take one step first, then check whether there are more steps.
+
+# Advanced Control Flow in C
+
+This README contains C# examples demonstrating nested loops in
+real-world scenarios.
+
+## Examples
+
+1.  Cinema seating (rows and seats)
+2.  Classroom attendance
+3.  Weekly sales report
+4.  Hotel room listing
+5.  School timetable
+6.  Restaurant tables and chairs
+7.  Employee monthly attendance
+8.  Multiplication table
+9.  Parking lot layout
+10. Examination scores
+11. Warehouse inventory
+12. Online store categories
+
+## Sample: Cinema Seating
+
+``` csharp
+for (int row = 1; row <= 5; row++)
+{
+    for (int seat = 1; seat <= 6; seat++)
+    {
+        Console.Write($"R{row}S{seat} ");
+    }
+    Console.WriteLine();
+}
+```
+
+## Why Nested Loops?
+
+Nested loops are useful whenever one collection contains another, such
+as:
+
+-   Rows → Seats
+-   Floors → Rooms
+-   Days → Periods
+-   Categories → Products
+-   Students → Subjects
+
+## Best Practices
+
+-   Keep nesting shallow when possible.
+-   Use descriptive variable names.
+-   Use `break` and `continue` appropriately.
+-   Extract repeated logic into methods.
+-   Consider time complexity (`O(n²)` for two nested loops).
+
+## Summary
+
+Nested loops allow you to process two-dimensional and hierarchical data
+efficiently and are commonly used in scheduling, reporting, seating,
+inventory, and matrix-style problems.
