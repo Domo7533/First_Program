@@ -311,3 +311,329 @@ as:
 Nested loops allow you to process two-dimensional and hierarchical data
 efficiently and are commonly used in scheduling, reporting, seating,
 inventory, and matrix-style problems.
+# Advanced Methods in C#
+
+Methods are reusable blocks of code that perform specific tasks. They help make programs more organized, readable, and easier to maintain. C# supports several advanced method features that improve code flexibility and reusability.
+
+---
+
+## Method Parameters
+
+Methods can accept one or more parameters.
+
+```csharp
+static void Greet(string name)
+{
+    Console.WriteLine($"Hello, {name}!");
+}
+
+Greet("Domo");
+```
+
+**Output**
+
+```text
+Hello, Domo!
+```
+
+---
+
+## Return Values
+
+Methods can return a value to the caller.
+
+```csharp
+static int Square(int number)
+{
+    return number * number;
+}
+
+int result = Square(6);
+Console.WriteLine(result);
+```
+
+**Output**
+
+```text
+36
+```
+
+---
+
+## Methods with Multiple Parameters
+
+A method can accept multiple arguments.
+
+```csharp
+static int Add(int a, int b)
+{
+    return a + b;
+}
+
+Console.WriteLine(Add(15, 25));
+```
+
+**Output**
+
+```text
+40
+```
+
+---
+
+## Method Overloading
+
+Method overloading allows multiple methods to have the same name but different parameter lists.
+
+```csharp
+class Calculator
+{
+    static int Add(int a, int b)
+    {
+        return a + b;
+    }
+
+    static double Add(double a, double b)
+    {
+        return a + b;
+    }
+
+    static string Add(string a, string b)
+    {
+        return a + b;
+    }
+}
+```
+
+### Example
+
+```csharp
+Console.WriteLine(Calculator.Add(5, 10));
+Console.WriteLine(Calculator.Add(5.5, 2.5));
+Console.WriteLine(Calculator.Add("Hello ", "World"));
+```
+
+**Output**
+
+```text
+15
+8
+Hello World
+```
+
+### Rules of Method Overloading
+
+- Methods must have the same name.
+- Methods must differ in:
+  - Number of parameters
+  - Parameter data types
+  - Order of parameters
+- Methods **cannot** be overloaded by changing only the return type.
+
+---
+
+## Optional Parameters
+
+Optional parameters provide default values when no argument is supplied.
+
+```csharp
+static void Welcome(string name = "Guest")
+{
+    Console.WriteLine($"Welcome, {name}!");
+}
+
+Welcome();
+Welcome("Alice");
+```
+
+**Output**
+
+```text
+Welcome, Guest!
+Welcome, Alice!
+```
+
+---
+
+## Named Arguments
+
+Named arguments improve readability by specifying parameter names.
+
+```csharp
+static void Student(string name, int age)
+{
+    Console.WriteLine($"{name} is {age} years old.");
+}
+
+Student(age: 22, name: "David");
+```
+
+**Output**
+
+```text
+David is 22 years old.
+```
+
+---
+
+## Recursive Methods
+
+A recursive method calls itself until a stopping condition is reached.
+
+```csharp
+static int Factorial(int n)
+{
+    if (n <= 1)
+        return 1;
+
+    return n * Factorial(n - 1);
+}
+
+Console.WriteLine(Factorial(5));
+```
+
+**Output**
+
+```text
+120
+```
+
+---
+
+# Understanding Variable Scope
+
+Scope determines where a variable can be accessed in a program.
+
+## 1. Local Scope
+
+Variables declared inside a method exist only within that method.
+
+```csharp
+static void Display()
+{
+    int age = 25;
+    Console.WriteLine(age);
+}
+```
+
+```
+Program
+│
+├── Display()
+│     age ✓
+│
+└── Main()
+      age ✗
+```
+
+---
+
+## 2. Block Scope
+
+Variables declared inside a block (`if`, `for`, `while`, etc.) exist only within that block.
+
+```csharp
+int number = 10;
+
+if (number > 5)
+{
+    int value = 20;
+    Console.WriteLine(value);
+}
+
+// value cannot be accessed here.
+```
+
+```
+Main()
+│
+├── number ✓
+│
+├── if
+│     value ✓
+│
+└── value ✗
+```
+
+---
+
+## 3. Parameter Scope
+
+Method parameters exist only inside the method.
+
+```csharp
+static int Multiply(int x, int y)
+{
+    return x * y;
+}
+```
+
+```
+Multiply(x, y)
+
+x ✓
+y ✓
+
+Outside Method
+
+x ✗
+y ✗
+```
+
+---
+
+## 4. Class Scope (Fields)
+
+Variables declared inside a class but outside methods are available to all methods in the class.
+
+```csharp
+class Student
+{
+    string school = "ABC Academy";
+
+    void Display()
+    {
+        Console.WriteLine(school);
+    }
+}
+```
+
+```
+Student
+│
+├── school ✓
+│
+├── Display()
+│     school ✓
+│
+└── OtherMethod()
+      school ✓
+```
+
+---
+
+## Scope Summary
+
+| Scope | Declared In | Accessible From |
+|--------|-------------|-----------------|
+| Local | Method | That method only |
+| Block | `{ }` block | That block only |
+| Parameter | Method parameters | That method only |
+| Class | Class | All methods in the class |
+
+---
+
+## Best Practices
+
+- Keep methods short and focused on a single task.
+- Use meaningful method names.
+- Reuse code through methods instead of duplication.
+- Use method overloading when similar operations differ only by parameter types.
+- Minimize variable scope by declaring variables as close as possible to where they are used.
+- Return values instead of relying on global variables whenever possible.
+
+---
+
+## Summary
+
+Advanced methods make C# programs modular, reusable, and easier to maintain. Features such as parameterized methods, return values, method overloading, recursion, optional parameters, and proper variable scope are fundamental concepts that every C# developer should master before moving on to object-oriented programming.
