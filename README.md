@@ -637,3 +637,531 @@ Student
 ## Summary
 
 Advanced methods make C# programs modular, reusable, and easier to maintain. Features such as parameterized methods, return values, method overloading, recursion, optional parameters, and proper variable scope are fundamental concepts that every C# developer should master before moving on to object-oriented programming.
+# Common Exceptions and Debugging Strategies in C#
+
+## Overview
+
+Exceptions are runtime errors that interrupt the normal flow of a program. C# provides a robust exception handling mechanism using the `try`, `catch`, `finally`, and `throw` keywords. Understanding common exceptions and effective debugging techniques helps developers build reliable and maintainable applications.
+
+---
+
+# Common Exceptions in C#
+
+## 1. DivideByZeroException
+
+**Description**
+
+Occurs when attempting to divide a number by zero.
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            int a = 20;
+            int b = 0;
+
+            int result = a / b;
+
+            Console.WriteLine(result);
+        }
+        catch (DivideByZeroException ex)
+        {
+            Console.WriteLine("Cannot divide by zero.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 2. NullReferenceException
+
+**Description**
+
+Occurs when trying to access an object that has not been initialized.
+
+### Example
+
+```csharp
+using System;
+
+class Student
+{
+    public string Name;
+}
+
+class Program
+{
+    static void Main()
+    {
+        Student student = null;
+
+        try
+        {
+            Console.WriteLine(student.Name);
+        }
+        catch (NullReferenceException ex)
+        {
+            Console.WriteLine("Object reference is null.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 3. IndexOutOfRangeException
+
+**Description**
+
+Occurs when accessing an invalid array index.
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = {10, 20, 30};
+
+        try
+        {
+            Console.WriteLine(numbers[5]);
+        }
+        catch (IndexOutOfRangeException ex)
+        {
+            Console.WriteLine("Invalid array index.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 4. FormatException
+
+**Description**
+
+Occurs when converting improperly formatted data.
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            int age = int.Parse("Twenty");
+
+            Console.WriteLine(age);
+        }
+        catch (FormatException ex)
+        {
+            Console.WriteLine("Invalid number format.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 5. OverflowException
+
+**Description**
+
+Occurs when a numeric calculation exceeds the allowed range.
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            checked
+            {
+                byte number = 255;
+                number++;
+            }
+        }
+        catch (OverflowException ex)
+        {
+            Console.WriteLine("Numeric overflow occurred.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 6. InvalidOperationException
+
+**Description**
+
+Occurs when a method is called in an invalid object state.
+
+### Example
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Queue<int> queue = new Queue<int>();
+
+        try
+        {
+            Console.WriteLine(queue.Dequeue());
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine("Queue is empty.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 7. FileNotFoundException
+
+**Description**
+
+Occurs when the specified file cannot be located.
+
+### Example
+
+```csharp
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            string text = File.ReadAllText("student.txt");
+            Console.WriteLine(text);
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine("File not found.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 8. UnauthorizedAccessException
+
+**Description**
+
+Occurs when the application lacks permission to access a resource.
+
+### Example
+
+```csharp
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            File.WriteAllText(@"C:\Windows\system.txt", "Hello");
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            Console.WriteLine("Access denied.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 9. ArgumentException
+
+**Description**
+
+Occurs when an invalid argument is supplied to a method.
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            string name = null;
+
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Name cannot be empty.");
+
+            Console.WriteLine(name);
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+---
+
+## 10. General Exception
+
+**Description**
+
+Used to catch unexpected exceptions that are not handled specifically.
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            int number = int.Parse("ABC");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An unexpected error occurred.");
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
+```
+
+> **Best Practice:** Always catch specific exception types before using a general `Exception` catch block.
+
+---
+
+# Debugging Strategies in C#
+
+Debugging is the process of locating and fixing errors in your application.
+
+---
+
+## 1. Read Exception Messages
+
+Exception messages usually describe the problem clearly.
+
+Example:
+
+```text
+System.FormatException:
+Input string was not in a correct format.
+```
+
+---
+
+## 2. Use Breakpoints
+
+Breakpoints pause execution and allow inspection of program state.
+
+Example:
+
+```csharp
+int a = 10;
+int b = 0;
+
+int result = a / b; // Place breakpoint here
+```
+
+Useful shortcut:
+
+* **F5** – Start Debugging
+
+---
+
+## 3. Step Through Code
+
+Visual Studio provides several debugging commands:
+
+| Shortcut    | Action    |
+| ----------- | --------- |
+| F10         | Step Over |
+| F11         | Step Into |
+| Shift + F11 | Step Out  |
+
+---
+
+## 4. Inspect Variables
+
+Use debugging windows to inspect values during execution.
+
+* Locals
+* Autos
+* Watch
+* QuickWatch
+
+Example:
+
+```csharp
+int age = int.Parse(userInput);
+```
+
+Inspect `userInput` before parsing.
+
+---
+
+## 5. Display Variable Values
+
+Use console output to verify program behavior.
+
+```csharp
+Console.WriteLine($"Age = {age}");
+Console.WriteLine($"Total = {total}");
+Console.WriteLine($"Counter = {counter}");
+```
+
+---
+
+## 6. Validate User Input
+
+Avoid exceptions by validating input.
+
+Instead of:
+
+```csharp
+int age = int.Parse(Console.ReadLine());
+```
+
+Use:
+
+```csharp
+if (int.TryParse(Console.ReadLine(), out int age))
+{
+    Console.WriteLine($"Age: {age}");
+}
+else
+{
+    Console.WriteLine("Invalid number.");
+}
+```
+
+---
+
+## 7. Check the Call Stack
+
+The Call Stack window shows the sequence of method calls that resulted in the exception.
+
+Example:
+
+```text
+Main()
+    ↓
+CalculateSalary()
+    ↓
+DivideHours()
+```
+
+---
+
+## 8. Examine the Stack Trace
+
+Every exception contains a stack trace.
+
+```csharp
+catch (Exception ex)
+{
+    Console.WriteLine(ex.StackTrace);
+}
+```
+
+This helps identify the exact line where the error occurred.
+
+---
+
+## 9. Use Logging
+
+Log errors instead of allowing applications to fail silently.
+
+```csharp
+try
+{
+    // Code
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+```
+
+Production applications should use a logging framework such as **Microsoft.Extensions.Logging**, **Serilog**, or **NLog**.
+
+---
+
+## 10. Reproduce the Bug
+
+A consistent process for fixing bugs:
+
+1. Identify the steps that cause the problem.
+2. Reproduce the issue consistently.
+3. Set breakpoints.
+4. Inspect variables.
+5. Fix the code.
+6. Test both normal and edge-case inputs.
+
+---
+
+# Best Practices
+
+* Handle only exceptions you can recover from.
+* Catch specific exceptions before general ones.
+* Use `TryParse()` instead of `Parse()` for user input.
+* Avoid empty `catch` blocks.
+* Release resources using `finally` or `using`.
+* Validate all external input.
+* Log exceptions in production applications.
+* Use the Visual Studio debugger instead of guessing.
+* Throw meaningful exceptions in custom methods.
+
+---
+
+# Summary
+
+Understanding common C# exceptions and using structured debugging techniques significantly improves software quality. By combining proper exception handling, input validation, logging, and Visual Studio's debugging tools, developers can efficiently identify and resolve runtime issues while creating more robust and maintainable applications.
