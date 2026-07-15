@@ -1165,3 +1165,204 @@ A consistent process for fixing bugs:
 # Summary
 
 Understanding common C# exceptions and using structured debugging techniques significantly improves software quality. By combining proper exception handling, input validation, logging, and Visual Studio's debugging tools, developers can efficiently identify and resolve runtime issues while creating more robust and maintainable applications.
+
+
+# Custom Exceptions and Logging in C#
+
+## Overview
+
+Exception handling is an essential part of building reliable C# applications. While .NET provides many built-in exceptions (such as `FormatException` and `NullReferenceException`), applications often require **custom exceptions** to represent business-specific errors. Logging complements exception handling by recording application events, errors, and diagnostic information, making troubleshooting and maintenance significantly easier.
+
+---
+
+## What are Custom Exceptions?
+
+A **custom exception** (also called a domain-specific exception) is a user-defined exception that represents an error unique to your application's business logic.
+
+Examples include:
+
+* `InsufficientFundsException`
+* `OutOfStockException`
+* `InvalidNationalIdException`
+* `CourseCapacityExceededException`
+* `PolicyExpiredException`
+
+Creating meaningful exceptions improves code readability and makes error handling more expressive.
+
+### Creating a Custom Exception
+
+```csharp
+using System;
+
+public class InsufficientFundsException : Exception
+{
+    public InsufficientFundsException()
+        : base("Insufficient funds for this transaction.")
+    {
+    }
+
+    public InsufficientFundsException(string message)
+        : base(message)
+    {
+    }
+}
+```
+
+---
+
+## Throwing a Custom Exception
+
+```csharp
+public void Withdraw(decimal amount)
+{
+    if (amount > Balance)
+    {
+        throw new InsufficientFundsException(
+            $"Withdrawal of ₦{amount} failed. Available balance is ₦{Balance}."
+        );
+    }
+
+    Balance -= amount;
+}
+```
+
+---
+
+## Catching a Custom Exception
+
+```csharp
+try
+{
+    account.Withdraw(10000);
+}
+catch (InsufficientFundsException ex)
+{
+    Console.WriteLine(ex.Message);
+}
+```
+
+---
+
+## Why Use Custom Exceptions?
+
+* Improve code readability.
+* Represent business rules clearly.
+* Simplify debugging.
+* Enable targeted exception handling.
+* Make applications easier to maintain.
+
+---
+
+# Logging in C#
+
+## Why Logging Matters
+
+Logging records important application events and errors, allowing developers to:
+
+* Debug problems quickly.
+* Monitor application health.
+* Audit important operations.
+* Track unexpected failures.
+* Diagnose production issues.
+
+---
+
+## Common Log Levels
+
+| Level       | Description                                   |
+| ----------- | --------------------------------------------- |
+| Trace       | Very detailed diagnostic information.         |
+| Debug       | Information useful during development.        |
+| Information | Normal application events.                    |
+| Warning     | Recoverable or unexpected conditions.         |
+| Error       | Operation failed.                             |
+| Critical    | Severe failure requiring immediate attention. |
+
+---
+
+## Simple Logger Example
+
+```csharp
+using System;
+using System.IO;
+
+public static class Logger
+{
+    private static readonly string logFile = "application.log";
+
+    public static void Log(string level, string message)
+    {
+        string entry =
+            $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{level}] {message}";
+
+        File.AppendAllText(logFile, entry + Environment.NewLine);
+    }
+}
+```
+
+Usage:
+
+```csharp
+Logger.Log("INFO", "Application started.");
+Logger.Log("WARNING", "Inventory is running low.");
+Logger.Log("ERROR", "Database connection failed.");
+```
+
+---
+
+## Logging Exceptions
+
+```csharp
+try
+{
+    account.Withdraw(10000);
+}
+catch (InsufficientFundsException ex)
+{
+    Logger.Log("WARNING", ex.Message);
+}
+catch (Exception ex)
+{
+    Logger.Log("ERROR", ex.ToString());
+}
+```
+
+---
+
+## Sample Log Output
+
+```text
+2026-07-15 09:00:15 [INFO] Application started.
+2026-07-15 09:02:11 [WARNING] Withdrawal denied. Available balance is ₦5000.
+2026-07-15 09:03:45 [ERROR] Database connection timeout.
+```
+
+---
+
+## Logging Best Practices
+
+* Use the appropriate log level.
+* Include timestamps.
+* Log useful context (user ID, transaction ID, request ID).
+* Record complete exception details for unexpected errors.
+* Never log passwords, authentication tokens, or other sensitive information.
+* Rotate and archive log files.
+* Review logs regularly to identify recurring issues.
+* Use structured logging for production applications.
+
+---
+
+## Popular Logging Frameworks
+
+| Framework                    | Description                                                                           |
+| ---------------------------- | ------------------------------------------------------------------------------------- |
+| Microsoft.Extensions.Logging | Built-in logging abstraction for modern .NET applications.                            |
+| Serilog                      | Structured logging with support for files, databases, cloud services, and dashboards. |
+| NLog                         | Highly configurable logging framework supporting multiple output targets.             |
+| log4net                      | Mature enterprise logging framework with flexible configuration options.              |
+
+---
+
+## Summary
+
+Custom exceptions make your applications easier to understand by representing business-specific errors instead of relying solely on generic exceptions. Logging provides visibility into application behavior by recording events, warnings, and errors. Together, exception handling and logging form the foundation of robust, maintainable, and production-ready C# applications.
