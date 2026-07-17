@@ -1366,3 +1366,298 @@ catch (Exception ex)
 ## Summary
 
 Custom exceptions make your applications easier to understand by representing business-specific errors instead of relying solely on generic exceptions. Logging provides visibility into application behavior by recording events, warnings, and errors. Together, exception handling and logging form the foundation of robust, maintainable, and production-ready C# applications.
+
+
+# Arrays and Lists in C#
+
+## Overview
+
+Arrays and Lists are two of the most commonly used collection types in C#. Both store multiple values of the same data type, but they differ significantly in how they manage data and memory.
+
+* **Array (`T[]`)**: A fixed-size collection whose length is determined when it is created.
+* **List (`List<T>`)**: A dynamic collection that can automatically grow or shrink during program execution.
+
+Understanding when to use each collection type is essential for writing efficient and maintainable C# applications.
+
+---
+
+## Arrays
+
+An array stores a fixed number of elements of the same type.
+
+### Syntax
+
+```csharp
+int[] numbers = { 10, 20, 30, 40, 50 };
+```
+
+Or
+
+```csharp
+int[] numbers = new int[5];
+```
+
+### Example
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string[] fruits =
+        {
+            "Apple",
+            "Banana",
+            "Orange"
+        };
+
+        foreach (string fruit in fruits)
+        {
+            Console.WriteLine(fruit);
+        }
+    }
+}
+```
+
+### Common Array Properties and Methods
+
+| Property/Method   | Description                                  |
+| ----------------- | -------------------------------------------- |
+| `Length`          | Returns the number of elements in the array. |
+| `Array.Sort()`    | Sorts the array in ascending order.          |
+| `Array.Reverse()` | Reverses the order of elements.              |
+| `Array.IndexOf()` | Finds the index of an element.               |
+| `Array.Clear()`   | Sets all elements to their default values.   |
+
+Example:
+
+```csharp
+int[] numbers = { 5, 3, 8, 1 };
+
+Array.Sort(numbers);
+
+Console.WriteLine(numbers[0]); // 1
+```
+
+---
+
+## Lists
+
+A `List<T>` is a dynamic collection that automatically resizes as items are added or removed.
+
+### Namespace
+
+```csharp
+using System.Collections.Generic;
+```
+
+### Syntax
+
+```csharp
+List<int> numbers = new List<int>();
+```
+
+### Example
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        List<string> fruits = new List<string>();
+
+        fruits.Add("Apple");
+        fruits.Add("Banana");
+        fruits.Add("Orange");
+
+        foreach (string fruit in fruits)
+        {
+            Console.WriteLine(fruit);
+        }
+    }
+}
+```
+
+---
+
+## Common List Methods
+
+| Method       | Description                           |
+| ------------ | ------------------------------------- |
+| `Add()`      | Adds an item to the end of the list.  |
+| `Remove()`   | Removes the first matching item.      |
+| `RemoveAt()` | Removes an item by index.             |
+| `Insert()`   | Inserts an item at a specified index. |
+| `Contains()` | Checks whether an item exists.        |
+| `IndexOf()`  | Returns the position of an item.      |
+| `Sort()`     | Sorts the list.                       |
+| `Clear()`    | Removes all items.                    |
+| `Count`      | Returns the number of elements.       |
+
+Example:
+
+```csharp
+List<int> numbers = new List<int>();
+
+numbers.Add(10);
+numbers.Add(20);
+numbers.Add(30);
+
+numbers.Remove(20);
+
+Console.WriteLine(numbers.Count);
+```
+
+---
+
+## Arrays vs Lists
+
+| Feature                  | Array    | List<T>                         |
+| ------------------------ | -------- | ------------------------------- |
+| Size                     | Fixed    | Dynamic                         |
+| Namespace                | System   | System.Collections.Generic      |
+| Length/Count             | `Length` | `Count`                         |
+| Add New Items            | ❌ No     | ✅ Yes                           |
+| Remove Items             | ❌ No     | ✅ Yes                           |
+| Insert Items             | ❌ No     | ✅ Yes                           |
+| Built-in Utility Methods | Limited  | Extensive                       |
+| Memory Usage             | Lower    | Slightly Higher                 |
+| Performance              | Faster   | Slightly Slower due to resizing |
+
+---
+
+## Converting Between Arrays and Lists
+
+### Array to List
+
+```csharp
+using System.Linq;
+
+int[] numbers = { 1, 2, 3, 4 };
+
+List<int> list = numbers.ToList();
+```
+
+### List to Array
+
+```csharp
+List<int> list = new List<int>
+{
+    1, 2, 3, 4
+};
+
+int[] numbers = list.ToArray();
+```
+
+---
+
+## Real-World Examples
+
+### Array Example – Days of the Week
+
+The number of days in a week never changes.
+
+```csharp
+string[] days =
+{
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+};
+```
+
+---
+
+### List Example – Student Registration
+
+Students can enroll or withdraw throughout the semester.
+
+```csharp
+List<string> students = new List<string>();
+
+students.Add("Alice");
+students.Add("Bob");
+students.Add("Charles");
+
+students.Remove("Bob");
+
+students.Add("David");
+```
+
+---
+
+## Best Practices
+
+* Use **arrays** when the number of elements is fixed.
+* Use **List<T>** when the collection size changes during execution.
+* Prefer **foreach** when you only need to read elements.
+* Use **for** loops when you need the element index.
+* Avoid converting repeatedly between arrays and lists unless necessary.
+* Choose the collection type based on your application's requirements rather than habit.
+
+---
+
+## Common Beginner Mistakes
+
+### Accessing an Invalid Index
+
+```csharp
+int[] numbers = { 10, 20, 30 };
+
+// Throws IndexOutOfRangeException
+Console.WriteLine(numbers[5]);
+```
+
+Always ensure the index is within the valid range:
+
+```csharp
+if (index >= 0 && index < numbers.Length)
+{
+    Console.WriteLine(numbers[index]);
+}
+```
+
+---
+
+### Forgetting the Namespace
+
+```csharp
+using System.Collections.Generic;
+```
+
+Without this namespace, `List<T>` cannot be used.
+
+---
+
+### Confusing `Length` and `Count`
+
+Arrays use:
+
+```csharp
+numbers.Length
+```
+
+Lists use:
+
+```csharp
+numbers.Count
+```
+
+---
+
+## Summary
+
+* Arrays are fixed-size collections that offer fast access and lower memory overhead.
+* Lists are flexible, dynamically sized collections with many built-in methods for managing data.
+* Arrays are ideal for fixed datasets, while `List<T>` is preferred when data changes over time.
+* Both support indexing and iteration, making them fundamental collection types in C#.
+* Choosing the right collection improves performance, readability, and maintainability.
