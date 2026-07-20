@@ -194,4 +194,125 @@ class Program
     }
 }
 
+Here's a simple C# program that adds and removes elements from a List<T> and then displays the updated list.
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // Create a list of fruits
+        List<string> fruits = new List<string>()
+        {
+            "Apple",
+            "Banana",
+            "Orange"
+        };
+
+        Console.WriteLine("Original List:");
+        foreach (string fruit in fruits)
+        {
+            Console.WriteLine(fruit);
+        }
+
+        // Add new elements
+        fruits.Add("Mango");
+        fruits.Add("Grapes");
+
+        // Remove an element
+        fruits.Remove("Banana");
+
+        Console.WriteLine("\nUpdated List:");
+        foreach (string fruit in fruits)
+        {
+            Console.WriteLine(fruit);
+        }
+    }
+}
+Output
+Original List:
+Apple
+Banana
+Orange
+
+Updated List:
+Apple
+Orange
+Mango
+Grapes
+Variation 1: Remove by Index
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        List<int> numbers = new List<int>()
+        {
+            10, 20, 30, 40, 50
+        };
+
+        numbers.Add(60);      // Add a new number
+        numbers.RemoveAt(2);  // Removes 30
+
+        Console.WriteLine("Updated List:");
+
+        foreach (int number in numbers)
+        {
+            Console.WriteLine(number);
+        }
+    }
+}
+
+Output
+
+Updated List:
+10
+20
+40
+50
+60
+Variation 2: User Input
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        List<string> students = new List<string>()
+        {
+            "Alice",
+            "Bob",
+            "Charles"
+        };
+
+        Console.Write("Enter a student to add: ");
+        string newStudent = Console.ReadLine();
+
+        students.Add(newStudent);
+
+        Console.Write("Enter a student to remove: ");
+        string removeStudent = Console.ReadLine();
+
+        if (students.Remove(removeStudent))
+        {
+            Console.WriteLine($"{removeStudent} was removed.");
+        }
+        else
+        {
+            Console.WriteLine($"{removeStudent} was not found.");
+        }
+
+        Console.WriteLine("\nUpdated Student List:");
+
+        foreach (string student in students)
+        {
+            Console.WriteLine(student);
+        }
+    }
+}
 
