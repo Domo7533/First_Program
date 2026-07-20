@@ -1661,3 +1661,498 @@ numbers.Count
 * Arrays are ideal for fixed datasets, while `List<T>` is preferred when data changes over time.
 * Both support indexing and iteration, making them fundamental collection types in C#.
 * Choosing the right collection improves performance, readability, and maintainability.
+
+# Dictionaries in C#
+
+## Overview
+
+A **Dictionary** in C# is a generic collection that stores data as **key-value pairs**. Each key is **unique** and is used to quickly retrieve its corresponding value.
+
+The `Dictionary<TKey, TValue>` class is part of the `System.Collections.Generic` namespace and provides fast lookup, insertion, and deletion of data.
+
+---
+
+# Why Use a Dictionary?
+
+Use a Dictionary when:
+
+- Each item has a unique identifier.
+- You need fast data retrieval.
+- You want to map one value to another.
+- Searching by key is more efficient than searching through a list.
+
+### Real-World Examples
+
+| Key | Value |
+|------|-------|
+| Student ID | Student Name |
+| Product Code | Product Price |
+| Country | Capital |
+| Username | User Information |
+| Account Number | Account Balance |
+| Course Code | Course Name |
+| ISBN | Book Title |
+
+---
+
+# Syntax
+
+```csharp
+Dictionary<TKey, TValue> dictionaryName = new Dictionary<TKey, TValue>();
+```
+
+Example:
+
+```csharp
+Dictionary<int, string> students = new Dictionary<int, string>();
+```
+
+- **TKey** → Type of the key
+- **TValue** → Type of the value
+
+---
+
+# Creating a Dictionary
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<int, string> students = new Dictionary<int, string>();
+
+        students.Add(101, "John");
+        students.Add(102, "Mary");
+        students.Add(103, "David");
+
+        Console.WriteLine(students[102]);
+    }
+}
+```
+
+**Output**
+
+```
+Mary
+```
+
+---
+
+# Initializing a Dictionary
+
+```csharp
+Dictionary<string, string> capitals = new Dictionary<string, string>()
+{
+    {"Nigeria", "Abuja"},
+    {"Ghana", "Accra"},
+    {"Kenya", "Nairobi"}
+};
+```
+
+---
+
+# Accessing Values
+
+Use the key to retrieve a value.
+
+```csharp
+Console.WriteLine(capitals["Nigeria"]);
+```
+
+Output
+
+```
+Abuja
+```
+
+---
+
+# Adding Items
+
+```csharp
+Dictionary<int, string> employees = new Dictionary<int, string>();
+
+employees.Add(1001, "James");
+employees.Add(1002, "Grace");
+```
+
+---
+
+# Updating Values
+
+```csharp
+employees[1002] = "Grace Wilson";
+```
+
+---
+
+# Removing Items
+
+```csharp
+employees.Remove(1001);
+```
+
+---
+
+# Checking if a Key Exists
+
+```csharp
+if (employees.ContainsKey(1002))
+{
+    Console.WriteLine("Employee Found");
+}
+```
+
+---
+
+# Checking if a Value Exists
+
+```csharp
+if (employees.ContainsValue("Grace Wilson"))
+{
+    Console.WriteLine("Value Exists");
+}
+```
+
+---
+
+# Looping Through a Dictionary
+
+```csharp
+foreach (var employee in employees)
+{
+    Console.WriteLine($"{employee.Key} : {employee.Value}");
+}
+```
+
+Output
+
+```
+1002 : Grace Wilson
+```
+
+---
+
+# Getting the Number of Items
+
+```csharp
+Console.WriteLine(employees.Count);
+```
+
+---
+
+# Clearing a Dictionary
+
+```csharp
+employees.Clear();
+```
+
+---
+
+# Dictionary Methods
+
+| Method | Description |
+|---------|-------------|
+| Add() | Adds a new key-value pair |
+| Remove() | Removes an item by key |
+| Clear() | Removes all items |
+| ContainsKey() | Checks if a key exists |
+| ContainsValue() | Checks if a value exists |
+| TryGetValue() | Retrieves a value safely |
+| Count | Returns the number of items |
+
+---
+
+# Using TryGetValue()
+
+Instead of directly accessing a key, use `TryGetValue()` to avoid exceptions if the key does not exist.
+
+```csharp
+Dictionary<int, string> students = new Dictionary<int, string>()
+{
+    {101, "John"},
+    {102, "Mary"}
+};
+
+if (students.TryGetValue(102, out string student))
+{
+    Console.WriteLine(student);
+}
+else
+{
+    Console.WriteLine("Student not found.");
+}
+```
+
+Output
+
+```
+Mary
+```
+
+---
+
+# Example 1: Student Records
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<int, string> students = new Dictionary<int, string>()
+        {
+            {101, "John"},
+            {102, "Mary"},
+            {103, "David"}
+        };
+
+        foreach (var student in students)
+        {
+            Console.WriteLine($"{student.Key} : {student.Value}");
+        }
+    }
+}
+```
+
+---
+
+# Example 2: Product Prices
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<string, double> products = new Dictionary<string, double>()
+        {
+            {"Laptop", 550000},
+            {"Mouse", 8000},
+            {"Keyboard", 15000}
+        };
+
+        Console.WriteLine($"Laptop costs ₦{products["Laptop"]}");
+    }
+}
+```
+
+---
+
+# Example 3: Inventory Management
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<string, int> inventory = new Dictionary<string, int>()
+        {
+            {"Laptop", 20},
+            {"Mouse", 150},
+            {"Keyboard", 75}
+        };
+
+        inventory["Laptop"]--;
+
+        foreach (var item in inventory)
+        {
+            Console.WriteLine($"{item.Key}: {item.Value}");
+        }
+    }
+}
+```
+
+---
+
+# Example 4: Country and Capital
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<string, string> countries = new Dictionary<string, string>()
+        {
+            {"Nigeria", "Abuja"},
+            {"Canada", "Ottawa"},
+            {"Japan", "Tokyo"}
+        };
+
+        Console.WriteLine(countries["Japan"]);
+    }
+}
+```
+
+---
+
+# Example 5: Word Frequency Counter
+
+```csharp
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        string sentence = "apple orange apple banana apple orange";
+
+        Dictionary<string, int> frequency = new Dictionary<string, int>();
+
+        foreach (string word in sentence.Split(' '))
+        {
+            if (frequency.ContainsKey(word))
+                frequency[word]++;
+            else
+                frequency[word] = 1;
+        }
+
+        foreach (var item in frequency)
+        {
+            Console.WriteLine($"{item.Key}: {item.Value}");
+        }
+    }
+}
+```
+
+Output
+
+```
+apple: 3
+orange: 2
+banana: 1
+```
+
+---
+
+# List vs Dictionary
+
+| Feature | List | Dictionary |
+|---------|------|------------|
+| Stores | Values | Key-Value Pairs |
+| Access | Index | Key |
+| Duplicate Values | Allowed | Allowed |
+| Duplicate Keys | Not Applicable | Not Allowed |
+| Search Speed | Linear | Fast by Key |
+| Best Use | Ordered Collections | Fast Lookups |
+
+---
+
+# Common Exceptions
+
+### Duplicate Key
+
+```csharp
+students.Add(101, "John");
+students.Add(101, "Mary");
+```
+
+Throws:
+
+```
+ArgumentException
+```
+
+Reason:
+
+```
+A key already exists.
+```
+
+---
+
+### Key Not Found
+
+```csharp
+Console.WriteLine(students[999]);
+```
+
+Throws:
+
+```
+KeyNotFoundException
+```
+
+Use:
+
+```csharp
+ContainsKey()
+```
+
+or
+
+```csharp
+TryGetValue()
+```
+
+instead.
+
+---
+
+# Best Practices
+
+- Use meaningful and unique keys.
+- Prefer `TryGetValue()` for safe retrieval.
+- Avoid storing duplicate keys.
+- Choose the correct key and value data types.
+- Use dictionaries for fast lookups instead of repeatedly searching through lists.
+- Keep keys immutable whenever possible.
+
+---
+
+# Practice Exercises
+
+## Beginner
+
+1. Create a dictionary of five students and their ages.
+2. Store five countries and their capitals.
+3. Create a phonebook using names and phone numbers.
+4. Store employee IDs and departments.
+5. Display all key-value pairs using `foreach`.
+
+---
+
+## Intermediate
+
+6. Update a student's age.
+7. Remove an employee from the dictionary.
+8. Check if a course code exists.
+9. Count the frequency of each word in a sentence.
+10. Build a simple inventory system that updates stock quantities.
+
+---
+
+## Advanced
+
+11. Build a student grade management system using a dictionary.
+12. Create a library catalog mapping ISBNs to book titles.
+13. Store usernames and user profiles using custom objects as values.
+14. Read a text file and count the occurrence of each word.
+15. Create a menu-driven console application to add, update, search, and delete dictionary entries.
+
+---
+
+# Summary
+
+- A **Dictionary** stores **key-value pairs**.
+- Keys must be **unique**.
+- Values can be duplicated.
+- Dictionaries provide **fast retrieval** using keys.
+- Common methods include `Add()`, `Remove()`, `ContainsKey()`, `ContainsValue()`, `TryGetValue()`, and `Clear()`.
+- Dictionaries are ideal for applications such as student records, product catalogs, inventories, banking systems, and lookup tables.
+
+Mastering dictionaries will help you build efficient C# applications that require quick and reliable data access.
